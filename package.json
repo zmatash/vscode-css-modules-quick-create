@@ -1,0 +1,66 @@
+{
+  "name": "css-modules-quick-create",
+  "displayName": "Adds a command to the context menu for JSX/TSX files to automatically generate a CSS module with matching name.",
+  "description": "",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "css-modules-quick-create.addCssModule",
+        "title": "Create CSS Module"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "css-modules-quick-create.addCssModule",
+          "when": "resourceLangId == 'typescriptreact' || resourceLangId == 'javascriptreact'",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CSS Modules - Quick Create",
+      "properties": {
+        "css-modules-quick-create.addImport": {
+          "title": "Add import statement",
+          "type": "boolean",
+          "default": "true",
+          "description": "Automatically add CSS module import statement to the top of the file."
+        }
+      }
+    },
+    "scripts": {
+      "vscode:prepublish": "npm run package",
+      "compile": "npm run check-types && node esbuild.js",
+      "watch": "npm-run-all -p watch:*",
+      "watch:esbuild": "node esbuild.js --watch",
+      "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+      "package": "npm run check-types && node esbuild.js --production",
+      "compile-tests": "tsc -p . --outDir out",
+      "watch-tests": "tsc -p . -w --outDir out",
+      "pretest": "npm run compile-tests && npm run compile",
+      "check-types": "tsc --noEmit",
+      "test": "vscode-test"
+    },
+    "devDependencies": {
+      "@biomejs/biome": "^1.9.4",
+      "@types/mocha": "^10.0.8",
+      "@types/node": "20.x",
+      "@types/vscode": "^1.96.0",
+      "@vscode/test-cli": "^0.0.10",
+      "@vscode/test-electron": "^2.4.1",
+      "esbuild": "^0.24.0",
+      "npm-run-all": "^4.1.5",
+      "typescript": "^5.6.2"
+    }
+  }
+}
